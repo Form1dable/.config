@@ -1,1 +1,6 @@
 @theme "/home/form1dable/.config/rofi/themes/spotlight-dark.rasi"
+
+configuration {
+	show-icons: true;
+}
+
