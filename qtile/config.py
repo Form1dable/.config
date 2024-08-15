@@ -1,7 +1,23 @@
-from libqtile import bar, layout, qtile, widget
+import os
+import subprocess
+
+from libqtile import bar, layout, qtile, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+
+
+@hook.subscribe.startup
+def autostart():
+    home = os.path.expanduser("~/.config/qtile/autostart.sh")
+    subprocess.Popen([home])
+
+
+@hook.subscribe.startup_once
+def autostart_once():
+    home = os.path.expanduser("~/.config/qtile/autostart_once.sh")
+    subprocess.Popen([home])
+
 
 mod = "mod1"
 terminal = guess_terminal()
@@ -17,6 +33,7 @@ keys = [
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
     Key([mod], "space", lazy.spawn("rofi -show drun"), desc="Application Launcher"),
     # Layout shifting
+    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key(
         [mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"
     ),
@@ -141,6 +158,7 @@ for i in groups:
 
 layouts = [
     layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4, margin=5),
+    layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -249,4 +267,4 @@ wl_xcursor_size = 24
 #
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
-wmname = "LG3D"
+wmname = "Qtile"
