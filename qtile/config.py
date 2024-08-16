@@ -6,6 +6,9 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
+from colors import gruvbox_mat
+from colors import gruvbox
+
 
 @hook.subscribe.startup
 def autostart():
@@ -20,7 +23,20 @@ def autostart_once():
 
 
 mod = "mod1"
+modalt = "mod4"
 terminal = guess_terminal()
+
+# Applicaton Variables
+app_launcher = "rofi -show drun -disable-history -show-icons"
+cmd_launcher = "rofi -show run -disable-history"
+win_launcher = "rofi -show window -show-icons"
+
+browser = "firefox"
+file_manager = "pcmanfm"
+
+screenshot = "flameshot full"
+screenshot_gui = "flameshot gui"
+lock = "betterlockscreen -l dimblur"
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -31,7 +47,10 @@ keys = [
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.spawn("rofi -show drun"), desc="Application Launcher"),
+    # Rofi
+    Key([mod], "space", lazy.spawn(app_launcher), desc="Application Launcher"),
+    Key([mod], "w", lazy.spawn(win_launcher), desc="Application Launcher"),
+    Key([mod], "c", lazy.spawn(cmd_launcher), desc="Application Launcher"),
     # Layout shifting
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key(
@@ -65,7 +84,6 @@ keys = [
     ),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     # Toggle between different layouts as defined below
-    Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
     Key(
         [mod],
@@ -114,6 +132,18 @@ keys = [
         lazy.spawn("brightnessctl s 10%-"),
         desc="brightness Down",
     ),
+    Key(
+        [mod, "control"],
+        "1",
+        lazy.spawn("firefox"),
+        desc="Run Firefox",
+    ),
+    Key(
+        [mod, "control"],
+        "2",
+        lazy.spawn("alacritty -e ranger"),
+        desc="Run Nautilus",
+    ),
 ]
 
 # Add key bindings to switch VTs in Wayland.
@@ -130,7 +160,18 @@ for vt in range(1, 8):
     )
 
 
-groups = [Group(i) for i in "123456789"]
+groups = [
+    Group("1", label="󰏃", matches=[Match(wm_class="firefox")]),
+    Group("2", label="󰏃", matches=[Match(wm_class="chromium")]),
+    Group("3", label="󰏃", matches=[Match(wm_class="Alacritty")]),
+    Group("4", label="󰏃"),
+    Group("5", label="󰏃"),
+    Group("6", label="󰏃"),
+    Group("7", label="󰏃"),
+    Group("8", label="󰏃", matches=[Match(wm_class="Signal")]),
+    Group("9", label="󰏃", matches=[Match(wm_class="Spotify")]),
+]
+
 
 for i in groups:
     keys.extend(
@@ -179,36 +220,165 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
+
+def spacer(length):
+    return widget.Spacer(length=length, background=gruvbox["dark-grey"])
+
+
+def icon(name):
+    pass
+
+
 screens = [
     Screen(
-        bottom=bar.Bar(
+        top=bar.Bar(
             [
-                widget.CurrentLayout(),
-                widget.GroupBox(),
-                widget.Prompt(),
-                widget.WindowName(),
-                widget.Chord(
-                    chords_colors={
-                        "launch": ("#ff0000", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
+                widget.Image(
+                    filename="~/.config/qtile/Assets/arch.png",
+                    background=gruvbox["yellow"],
+                    margin=3,
                 ),
-                widget.TextBox("default config", name="default"),
-                widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
-                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                # widget.StatusNotifier(),
-                widget.Systray(),
-                widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-                widget.QuickExit(),
+                spacer(12),
+                widget.GroupBox(
+                    fontsize=24,
+                    borderwidth=3,
+                    highlight_method="block",
+                    active=gruvbox["cream-alt"],
+                    block_highlight_text_color=gruvbox["yellow"],
+                    highlight_color="#D0DAF0",
+                    inactive=gruvbox["blue"],
+                    foreground="#4B427E",
+                    background=gruvbox["dark-grey"],
+                    this_current_screen_border=gruvbox["dark-grey"],
+                    this_screen_border=gruvbox["dark-grey"],
+                    other_current_screen_border=gruvbox["dark-grey"],
+                    other_screen_border=gruvbox["dark-grey"],
+                    urgent_border=gruvbox["dark-grey"],
+                    rounded=True,
+                    disable_drag=True,
+                ),
+                spacer(10),
+                widget.Image(
+                    filename="~/.config/qtile/Assets/layout.png",
+                    background=gruvbox["dark-grey"],
+                ),
+                widget.CurrentLayout(
+                    background=gruvbox["dark-grey"],
+                    foreground=gruvbox["cream"],
+                    fmt="{}",
+                    font="JetBrains Mono Bold",
+                    fontsize=13,
+                ),
+                widget.Image(
+                    filename="~/.config/qtile/Assets/1.png",
+                ),
+                widget.WindowName(
+                    background=gruvbox["dark-grey"],
+                    format="{name}",
+                    font="JetBrains Mono Bold",
+                    fontsize=16,
+                    foreground=gruvbox["yellow"],
+                    empty_group_string="Desktop",
+                ),
+                widget.Image(
+                    filename="~/.config/qtile/Assets/2.png",
+                ),
+                spacer(10),
+                widget.Image(
+                    filename="~/.config/qtile/Assets/Misc/ram.png",
+                    background="#202222",
+                ),
+                widget.ThermalSensor(
+                    background=gruvbox["dark-grey"],
+                    foreground=gruvbox["cream-alt"],
+                    font="JetBrains Mono Bold",
+                    fontsize=13,
+                    format="{temp: .0f}{unit}",
+                    threshold=90.0,
+                    update_interval=2,
+                ),
+                widget.Image(
+                    filename="~/.config/qtile/Assets/2.png",
+                ),
+                spacer(10),
+                widget.Image(
+                    filename="~/.config/qtile/Assets/Misc/ram.png",
+                    background="#202222",
+                ),
+                widget.CPU(
+                    background="#202222",
+                    foreground=gruvbox["cream-alt"],
+                    format="{load_percent}%",
+                    font="JetBrains Mono Bold",
+                    fontsize=13,
+                    update_interval=2,
+                ),
+                widget.Image(
+                    filename="~/.config/qtile/Assets/2.png",
+                ),
+                widget.Image(
+                    filename="~/.config/qtile/Assets/Misc/ram.png",
+                    background="#202222",
+                ),
+                spacer(10),
+                widget.Memory(
+                    background="#202222",
+                    format="{MemUsed: .0f} {mm}",
+                    foreground=gruvbox["cream-alt"],
+                    font="JetBrains Mono Bold",
+                    fontsize=13,
+                    update_interval=2,
+                ),
+                widget.Image(
+                    filename="~/.config/qtile/Assets/2.png",
+                ),
+                spacer(10),
+                widget.Volume(
+                    font="JetBrains Mono Bold",
+                    fontsize=15,
+                    theme_path="~/.config/qtile/Assets/Volume/",
+                    emoji=True,
+                    background="#202222",
+                ),
+                spacer(10),
+                widget.Volume(
+                    font="JetBrains Mono Bold",
+                    fontsize=15,
+                    background="#202222",
+                    foreground=gruvbox["cream-alt"],
+                ),
+                widget.Image(
+                    filename="~/.config/qtile/Assets/2.png",
+                ),
+                spacer(10),
+                widget.Systray(
+                    background=gruvbox["dark-grey"],
+                    fontsize=2,
+                ),
+                spacer(10),
+                widget.Image(
+                    filename="~/.config/qtile/Assets/5.png",
+                    background="#202222",
+                ),
+                widget.Image(
+                    filename="~/.config/qtile/Assets/Misc/clock.png",
+                    background="#0F1212",
+                    margin_y=6,
+                    margin_x=5,
+                ),
+                widget.Clock(
+                    format="%I:%M %p",
+                    background="#0F1212",
+                    foreground=gruvbox["yellow-alt"],
+                    font="JetBrains Mono Bold",
+                    fontsize=15,
+                ),
             ],
-            24,
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+            40,
+            border_color="#0F1212",
+            border_width=[0, 0, 0, 0],
+            margin=[10, 15, 6, 10],
         ),
-        # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
-        # By default we handle these events delayed to already improve performance, however your system might still be struggling
-        # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
-        # x11_drag_polling_rate = 60,
     ),
 ]
 

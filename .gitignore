@@ -5,4 +5,7 @@ fontconfig/
 spotify/
 btop/
 chromium/
+__pycache__
+discord/
 gtk-3.0/
+go/
