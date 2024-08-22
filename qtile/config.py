@@ -176,24 +176,18 @@ groups = [
 for i in groups:
     keys.extend(
         [
-            # mod + group number = switch to group
             Key(
                 [mod],
                 i.name,
                 lazy.group[i.name].toscreen(),
-                desc="Switch to group {}".format(i.name),
+                desc=f"Switch to group {i.name}",
             ),
-            # mod + shift + group number = switch to & move focused window to group
             Key(
                 [mod, "shift"],
                 i.name,
                 lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(i.name),
+                desc=f"Switch to & move focused window to group {i.name}",
             ),
-            # Or, use below if you prefer not to switch to that group.
-            # # mod + shift + group number = move focused window to group
-            # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-            #     desc="move focused window to group {}".format(i.name)),
         ]
     )
 
@@ -213,32 +207,25 @@ layouts = [
     # layout.Zoomy(),
 ]
 
-widget_defaults = dict(
-    font="sans",
-    fontsize=12,
-    padding=3,
-)
+widget_defaults = {
+    "font": "JetBrainsMono Nerd Font Mono",
+    "fontsize": 12,
+    "padding": 3,
+}
+
 extension_defaults = widget_defaults.copy()
 
 
 def spacer(length):
+    """Spacer utility for the widgets"""
     return widget.Spacer(length=length, background=gruvbox["dark-grey"])
-
-
-def icon(name):
-    pass
 
 
 screens = [
     Screen(
         top=bar.Bar(
             [
-                widget.Image(
-                    filename="~/.config/qtile/Assets/arch.png",
-                    background=gruvbox["yellow"],
-                    margin=3,
-                ),
-                spacer(12),
+                spacer(15),
                 widget.GroupBox(
                     fontsize=24,
                     borderwidth=3,
@@ -258,9 +245,12 @@ screens = [
                     disable_drag=True,
                 ),
                 spacer(10),
-                widget.Image(
-                    filename="~/.config/qtile/Assets/layout.png",
-                    background=gruvbox["dark-grey"],
+                widget.TextBox(
+                    text="󰙀",
+                    fontsize=30,
+                    foreground="ffffff",
+                    background="#202222",
+                    # mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("firefox")},
                 ),
                 widget.CurrentLayout(
                     background=gruvbox["dark-grey"],
@@ -268,9 +258,6 @@ screens = [
                     fmt="{}",
                     font="JetBrains Mono Bold",
                     fontsize=13,
-                ),
-                widget.Image(
-                    filename="~/.config/qtile/Assets/1.png",
                 ),
                 widget.WindowName(
                     background=gruvbox["dark-grey"],
@@ -280,13 +267,12 @@ screens = [
                     foreground=gruvbox["yellow"],
                     empty_group_string="Desktop",
                 ),
-                widget.Image(
-                    filename="~/.config/qtile/Assets/2.png",
-                ),
-                spacer(10),
-                widget.Image(
-                    filename="~/.config/qtile/Assets/Misc/ram.png",
+                widget.TextBox(
+                    text="",
+                    fontsize=25,
+                    foreground="ffffff",
                     background="#202222",
+                    # mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("firefox")},
                 ),
                 widget.ThermalSensor(
                     background=gruvbox["dark-grey"],
@@ -297,13 +283,13 @@ screens = [
                     threshold=90.0,
                     update_interval=2,
                 ),
-                widget.Image(
-                    filename="~/.config/qtile/Assets/2.png",
-                ),
-                spacer(10),
-                widget.Image(
-                    filename="~/.config/qtile/Assets/Misc/ram.png",
+                spacer(15),
+                widget.TextBox(
+                    text="",
+                    fontsize=35,
+                    foreground="ffffff",
                     background="#202222",
+                    # mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("firefox")},
                 ),
                 widget.CPU(
                     background="#202222",
@@ -313,14 +299,14 @@ screens = [
                     fontsize=13,
                     update_interval=2,
                 ),
-                widget.Image(
-                    filename="~/.config/qtile/Assets/2.png",
-                ),
-                widget.Image(
-                    filename="~/.config/qtile/Assets/Misc/ram.png",
+                spacer(15),
+                widget.TextBox(
+                    text="",
+                    fontsize=30,
+                    foreground="ffffff",
                     background="#202222",
+                    # mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("firefox")},
                 ),
-                spacer(10),
                 widget.Memory(
                     background="#202222",
                     format="{MemUsed: .0f} {mm}",
@@ -329,42 +315,27 @@ screens = [
                     fontsize=13,
                     update_interval=2,
                 ),
-                widget.Image(
-                    filename="~/.config/qtile/Assets/2.png",
-                ),
-                spacer(10),
-                widget.Volume(
-                    font="JetBrains Mono Bold",
-                    fontsize=15,
-                    theme_path="~/.config/qtile/Assets/Volume/",
-                    emoji=True,
+                spacer(15),
+                widget.TextBox(
+                    text="",
+                    fontsize=30,
+                    foreground="ffffff",
                     background="#202222",
+                    # mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("firefox")},
                 ),
-                spacer(10),
                 widget.Volume(
                     font="JetBrains Mono Bold",
                     fontsize=15,
                     background="#202222",
                     foreground=gruvbox["cream-alt"],
                 ),
-                widget.Image(
-                    filename="~/.config/qtile/Assets/2.png",
-                ),
-                spacer(10),
-                widget.Systray(
-                    background=gruvbox["dark-grey"],
-                    fontsize=2,
-                ),
-                spacer(10),
-                widget.Image(
-                    filename="~/.config/qtile/Assets/5.png",
+                spacer(15),
+                widget.TextBox(
+                    text="󰅐",
+                    fontsize=30,
+                    foreground="ffffff",  # Icon color
                     background="#202222",
-                ),
-                widget.Image(
-                    filename="~/.config/qtile/Assets/Misc/clock.png",
-                    background="#0F1212",
-                    margin_y=6,
-                    margin_x=5,
+                    # mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("firefox")},
                 ),
                 widget.Clock(
                     format="%I:%M %p",
@@ -373,6 +344,7 @@ screens = [
                     font="JetBrains Mono Bold",
                     fontsize=15,
                 ),
+                spacer(20),
             ],
             40,
             border_color="#0F1212",

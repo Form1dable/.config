@@ -1,4 +1,6 @@
 alacritty
+alsa-plugins
+alsa-utils
 amd-ucode
 base
 base-devel
@@ -6,6 +8,8 @@ bat
 btop
 btrfs-progs
 chromium
+discord
+dunst
 feh
 firefox
 font-manager
@@ -21,6 +25,7 @@ lightdm
 lightdm-gtk-greeter
 linux
 linux-firmware
+linux-headers
 lsof
 lxappearance
 nano
@@ -29,10 +34,13 @@ neofetch
 neovim
 nodejs
 npm
+nvidia-470xx-dkms
 openssh
 pipewire
 pipewire-alsa
 pipewire-pulse
+python-pip
+python-psutil
 qtile
 ranger
 ripgrep
@@ -40,7 +48,9 @@ rofi
 signal-desktop
 slock
 smartmontools
+spotify-launcher
 terminus-font
+tree
 unrar
 unzip
 vim
@@ -60,5 +70,7 @@ xorg-xinit
 xorg-xrandr
 xsel
 xterm
+yay
+yay-debug
 zram-generator
 zsh
