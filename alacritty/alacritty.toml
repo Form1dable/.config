@@ -15,4 +15,8 @@ style = "Italic"
 
 [font.normal]
 family = "JetBrainsMono Nerd Font Mono"
-style = "Regular"
+style = "Medium"
+
+[window]
+padding = { x = 15, y = 15 }
+

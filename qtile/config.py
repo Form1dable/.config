@@ -141,8 +141,15 @@ keys = [
     Key(
         [mod, "control"],
         "2",
-        lazy.spawn("alacritty -e ranger"),
-        desc="Run Nautilus",
+        lazy.spawn("thunar"),
+        desc="Run Thunar",
+    ),
+    # System Control
+    Key(
+        [mod, "control"],
+        "l",
+        lazy.spawn("i3lock"),
+        desc="Screen lock",
     ),
 ]
 
@@ -162,7 +169,7 @@ for vt in range(1, 8):
 
 groups = [
     Group("1", label="󰏃", matches=[Match(wm_class="firefox")]),
-    Group("2", label="󰏃", matches=[Match(wm_class="chromium")]),
+    Group("2", label="󰏃"),
     Group("3", label="󰏃", matches=[Match(wm_class="Alacritty")]),
     Group("4", label="󰏃"),
     Group("5", label="󰏃"),
@@ -192,7 +199,7 @@ for i in groups:
     )
 
 layouts = [
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4, margin=5),
+    layout.Columns(border_focus_stack=["#FBF1C7", "#3C3836"], border_width=2, margin=5),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -225,7 +232,6 @@ screens = [
     Screen(
         top=bar.Bar(
             [
-                spacer(15),
                 widget.GroupBox(
                     fontsize=24,
                     borderwidth=3,
@@ -259,6 +265,7 @@ screens = [
                     font="JetBrains Mono Bold",
                     fontsize=13,
                 ),
+                spacer(20),
                 widget.WindowName(
                     background=gruvbox["dark-grey"],
                     format="{name}",
@@ -339,7 +346,7 @@ screens = [
                 ),
                 widget.Clock(
                     format="%I:%M %p",
-                    background="#0F1212",
+                    background="#202222",
                     foreground=gruvbox["yellow-alt"],
                     font="JetBrains Mono Bold",
                     fontsize=15,
@@ -347,9 +354,8 @@ screens = [
                 spacer(20),
             ],
             40,
-            border_color="#0F1212",
             border_width=[0, 0, 0, 0],
-            margin=[10, 15, 6, 10],
+            margin=[5, 5, 5, 5],
         ),
     ),
 ]

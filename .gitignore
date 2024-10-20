@@ -8,6 +8,8 @@ chromium/
 discord/
 gtk-3.0/
 go/
+Thunar/
+dconf/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
